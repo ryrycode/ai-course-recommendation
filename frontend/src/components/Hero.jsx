@@ -29,6 +29,19 @@ export default function Hero() {
             </button>
           </Link>
 
+          <div className="mt-6">
+            <p className="text-gray-500">
+              Administrator?
+            </p>
+
+            <Link
+              href="/admin/login"
+              className="text-green-700 font-semibold hover:underline"
+            >
+              Login Here
+            </Link>
+          </div>
+
         </div>
 
         {/* Right Side */}
