@@ -1,3 +1,5 @@
+import AdminStatCard from "@/components/AdminStatCard";
+
 export default function Dashboard() {
   return (
     <>
@@ -10,73 +12,65 @@ export default function Dashboard() {
         Welcome back, Administrator.
       </p>
 
-      {/* Statistics */}
+      {/* Statistics Cards */}
 
       <div className="grid grid-cols-4 gap-6 mt-10">
 
-        <div className="bg-white rounded-xl shadow p-6">
-          <p className="text-gray-500">Students</p>
+        <AdminStatCard
+          title="Students"
+          value="152"
+          icon="👨‍🎓"
+        />
 
-          <h2 className="text-4xl font-bold text-green-700 mt-3">
-            152
-          </h2>
-        </div>
+        <AdminStatCard
+          title="Questions"
+          value="30"
+          icon="📋"
+        />
 
-        <div className="bg-white rounded-xl shadow p-6">
-          <p className="text-gray-500">Questions</p>
+        <AdminStatCard
+          title="Schools"
+          value="5"
+          icon="🏫"
+        />
 
-          <h2 className="text-4xl font-bold text-green-700 mt-3">
-            30
-          </h2>
-        </div>
-
-        <div className="bg-white rounded-xl shadow p-6">
-          <p className="text-gray-500">Schools</p>
-
-          <h2 className="text-4xl font-bold text-green-700 mt-3">
-            5
-          </h2>
-        </div>
-
-        <div className="bg-white rounded-xl shadow p-6">
-          <p className="text-gray-500">Courses</p>
-
-          <h2 className="text-4xl font-bold text-green-700 mt-3">
-            18
-          </h2>
-        </div>
+        <AdminStatCard
+          title="Courses"
+          value="18"
+          icon="🎓"
+        />
 
       </div>
+
+      {/* Quick Actions */}
 
       <div className="mt-10">
 
         <h2 className="text-2xl font-bold text-green-700">
-            Quick Actions
+          Quick Actions
         </h2>
 
         <div className="grid grid-cols-2 gap-6 mt-6">
 
-            <button className="bg-green-700 hover:bg-green-800 text-white p-5 rounded-xl">
+          <button className="bg-green-700 hover:bg-green-800 text-white p-5 rounded-xl">
             Manage Questions
-            </button>
+          </button>
 
-            <button className="bg-green-700 hover:bg-green-800 text-white p-5 rounded-xl">
+          <button className="bg-green-700 hover:bg-green-800 text-white p-5 rounded-xl">
             Manage Courses
-            </button>
+          </button>
 
-            <button className="bg-green-700 hover:bg-green-800 text-white p-5 rounded-xl">
+          <button className="bg-green-700 hover:bg-green-800 text-white p-5 rounded-xl">
             Manage Schools
-            </button>
+          </button>
 
-            <button className="bg-green-700 hover:bg-green-800 text-white p-5 rounded-xl">
+          <button className="bg-green-700 hover:bg-green-800 text-white p-5 rounded-xl">
             Recommendation Criteria
-            </button>
+          </button>
 
         </div>
 
       </div>
-
-      
 
     </>
   );
