@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import QuestionCard from "@/components/QuestionCard";
-import questions from "@/data/questions";
+import questions from "@/data/mockQuestions";
 
 export default function AssessmentQuestions() {
     const [currentSection, setCurrentSection] = useState(1);
