@@ -39,6 +39,16 @@ export default function QuestionsPage() {
     setShowModal(false);
   }
 
+  function handleDeleteQuestion(id) {
+
+  const updatedQuestions = questionList.filter(
+    (item) => item.id !== id
+  );
+
+  setQuestionList(updatedQuestions);
+
+  }
+
   return (
     <>
 
@@ -108,7 +118,10 @@ export default function QuestionsPage() {
                     Edit
                   </button>
 
-                  <button className="text-red-600 hover:underline">
+                  <button
+                    onClick={() => handleDeleteQuestion(item.id)}
+                    className="text-red-600 hover:underline"
+                  >
                     Delete
                   </button>
 
