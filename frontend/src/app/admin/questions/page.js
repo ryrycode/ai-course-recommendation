@@ -12,9 +12,10 @@ export default function QuestionsPage() {
 
   const [searchTerm, setSearchTerm] = useState("");
 
+  const [selectedCategory, setSelectedCategory] = useState("All Categories");
+
   const [questionList, setQuestionList] = useState(mockAdminQuestions);
 
-  // NEW
   const [editingId, setEditingId] = useState(null);
 
   function openAddModal() {
@@ -87,6 +88,11 @@ export default function QuestionsPage() {
 
   }
 
+  const categories = [
+  "All Categories",
+  ...new Set(questionList.map((item) => item.category)),
+  ];
+
   return (
     <>
 
@@ -105,15 +111,34 @@ export default function QuestionsPage() {
 
       </div>
 
-      <div className="mt-8 mb-4">
+      <div className="mt-8 mb-4 flex gap-4">
 
         <input
           type="text"
           placeholder="Search by category or question..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full border rounded-lg p-3"
+          className="flex-1 border rounded-lg p-3"
         />
+
+        <select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="border rounded-lg p-3 w-64"
+        >
+
+          {categories.map((category) => (
+
+            <option
+              key={category}
+              value={category}
+            >
+              {category}
+            </option>
+
+          ))}
+
+        </select>
 
       </div>
 
@@ -186,8 +211,6 @@ export default function QuestionsPage() {
           </tbody>
 
         </table>
-
-      </div>
 
       {showModal && (
 
