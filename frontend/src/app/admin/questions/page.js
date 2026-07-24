@@ -5,15 +5,29 @@ import mockAdminQuestions from "@/data/mockAdminQuestions";
 
 export default function QuestionsPage() {
 
-  // Modal
   const [showModal, setShowModal] = useState(false);
 
-  // Form Inputs
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
 
-  // Table Data
   const [questionList, setQuestionList] = useState(mockAdminQuestions);
+
+  // NEW
+  const [editingId, setEditingId] = useState(null);
+
+  function openAddModal() {
+    setEditingId(null);
+    setCategory("");
+    setQuestion("");
+    setShowModal(true);
+  }
+
+  function openEditModal(item) {
+    setEditingId(item.id);
+    setCategory(item.category);
+    setQuestion(item.question);
+    setShowModal(true);
+  }
 
   function handleSaveQuestion() {
 
@@ -22,37 +36,57 @@ export default function QuestionsPage() {
       return;
     }
 
-    const newQuestion = {
-      id: questionList.length + 1,
-      category,
-      question,
-    };
+    if (editingId !== null) {
 
-    setQuestionList([
-      ...questionList,
-      newQuestion,
-    ]);
+      const updatedQuestions = questionList.map((item) => {
+
+        if (item.id === editingId) {
+          return {
+            ...item,
+            category,
+            question,
+          };
+        }
+
+        return item;
+
+      });
+
+      setQuestionList(updatedQuestions);
+
+    } else {
+
+      const newQuestion = {
+        id: questionList.length + 1,
+        category,
+        question,
+      };
+
+      setQuestionList([
+        ...questionList,
+        newQuestion,
+      ]);
+
+    }
 
     setCategory("");
     setQuestion("");
-
+    setEditingId(null);
     setShowModal(false);
   }
 
   function handleDeleteQuestion(id) {
 
-  const updatedQuestions = questionList.filter(
-    (item) => item.id !== id
-  );
+    const updatedQuestions = questionList.filter(
+      (item) => item.id !== id
+    );
 
-  setQuestionList(updatedQuestions);
+    setQuestionList(updatedQuestions);
 
   }
 
   return (
     <>
-
-      {/* Header */}
 
       <div className="flex justify-between items-center">
 
@@ -61,15 +95,13 @@ export default function QuestionsPage() {
         </h1>
 
         <button
-          onClick={() => setShowModal(true)}
+          onClick={openAddModal}
           className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
         >
           + Add Question
         </button>
 
       </div>
-
-      {/* Table */}
 
       <div className="mt-8 bg-white rounded-xl shadow overflow-hidden">
 
@@ -79,17 +111,11 @@ export default function QuestionsPage() {
 
             <tr>
 
-              <th className="text-left p-4">
-                Category
-              </th>
+              <th className="text-left p-4">Category</th>
 
-              <th className="text-left p-4">
-                Question
-              </th>
+              <th className="text-left p-4">Question</th>
 
-              <th className="text-center p-4">
-                Actions
-              </th>
+              <th className="text-center p-4">Actions</th>
 
             </tr>
 
@@ -114,7 +140,10 @@ export default function QuestionsPage() {
 
                 <td className="p-4 text-center space-x-4">
 
-                  <button className="text-blue-600 hover:underline">
+                  <button
+                    onClick={() => openEditModal(item)}
+                    className="text-blue-600 hover:underline"
+                  >
                     Edit
                   </button>
 
@@ -137,8 +166,6 @@ export default function QuestionsPage() {
 
       </div>
 
-      {/* Modal */}
-
       {showModal && (
 
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
@@ -146,7 +173,11 @@ export default function QuestionsPage() {
           <div className="bg-white rounded-xl shadow-lg w-[550px] p-8">
 
             <h2 className="text-2xl font-bold text-green-700">
-              Add Question
+
+              {editingId !== null
+                ? "Edit Question"
+                : "Add Question"}
+
             </h2>
 
             <div className="mt-6">
@@ -160,7 +191,6 @@ export default function QuestionsPage() {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full border rounded-lg p-3"
-                placeholder="Example: Analytical Skills"
               />
 
             </div>
@@ -175,7 +205,6 @@ export default function QuestionsPage() {
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 className="w-full border rounded-lg p-3 h-32"
-                placeholder="Enter question..."
               />
 
             </div>
@@ -193,7 +222,7 @@ export default function QuestionsPage() {
                 onClick={handleSaveQuestion}
                 className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
               >
-                Save
+                {editingId !== null ? "Update" : "Save"}
               </button>
 
             </div>
