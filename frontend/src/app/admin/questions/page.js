@@ -5,12 +5,45 @@ import mockAdminQuestions from "@/data/mockAdminQuestions";
 
 export default function QuestionsPage() {
 
+  // Modal
   const [showModal, setShowModal] = useState(false);
+
+  // Form Inputs
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
 
+  // Table Data
+  const [questionList, setQuestionList] = useState(mockAdminQuestions);
+
+  function handleSaveQuestion() {
+
+    if (!category.trim() || !question.trim()) {
+      alert("Please complete all fields.");
+      return;
+    }
+
+    const newQuestion = {
+      id: questionList.length + 1,
+      category,
+      question,
+    };
+
+    setQuestionList([
+      ...questionList,
+      newQuestion,
+    ]);
+
+    setCategory("");
+    setQuestion("");
+
+    setShowModal(false);
+  }
+
   return (
     <>
+
+      {/* Header */}
+
       <div className="flex justify-between items-center">
 
         <h1 className="text-4xl font-bold text-green-700">
@@ -25,6 +58,8 @@ export default function QuestionsPage() {
         </button>
 
       </div>
+
+      {/* Table */}
 
       <div className="mt-8 bg-white rounded-xl shadow overflow-hidden">
 
@@ -52,7 +87,7 @@ export default function QuestionsPage() {
 
           <tbody>
 
-            {mockAdminQuestions.map((item) => (
+            {questionList.map((item) => (
 
               <tr
                 key={item.id}
@@ -67,7 +102,7 @@ export default function QuestionsPage() {
                   {item.question}
                 </td>
 
-                <td className="p-4 text-center space-x-3">
+                <td className="p-4 text-center space-x-4">
 
                   <button className="text-blue-600 hover:underline">
                     Edit
@@ -89,10 +124,13 @@ export default function QuestionsPage() {
 
       </div>
 
+      {/* Modal */}
+
       {showModal && (
+
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
 
-          <div className="bg-white rounded-xl shadow-lg p-8 w-[500px]">
+          <div className="bg-white rounded-xl shadow-lg w-[550px] p-8">
 
             <h2 className="text-2xl font-bold text-green-700">
               Add Question
@@ -108,8 +146,8 @@ export default function QuestionsPage() {
                 type="text"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                placeholder="Example: Analytical Skills"
                 className="w-full border rounded-lg p-3"
+                placeholder="Example: Analytical Skills"
               />
 
             </div>
@@ -123,19 +161,26 @@ export default function QuestionsPage() {
               <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
-                placeholder="Enter the question..."
                 className="w-full border rounded-lg p-3 h-32"
+                placeholder="Enter question..."
               />
 
             </div>
 
-            <div className="flex justify-end mt-8">
+            <div className="flex justify-end gap-4 mt-8">
 
               <button
                 onClick={() => setShowModal(false)}
-                className="px-6 py-3 border rounded-lg"
+                className="border px-6 py-3 rounded-lg hover:bg-gray-100"
               >
                 Cancel
+              </button>
+
+              <button
+                onClick={handleSaveQuestion}
+                className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
+              >
+                Save
               </button>
 
             </div>
@@ -143,6 +188,7 @@ export default function QuestionsPage() {
           </div>
 
         </div>
+
       )}
 
     </>
