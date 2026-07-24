@@ -1,6 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import mockAdminQuestions from "@/data/mockAdminQuestions";
 
 export default function QuestionsPage() {
+  const [showModal, setShowModal] = useState(false);
   return (
     <>
       <div className="flex justify-between items-center">
@@ -9,7 +13,10 @@ export default function QuestionsPage() {
           Question Management
         </h1>
 
-        <button className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg">
+        <button
+          onClick={() => setShowModal(true)}
+          className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
+        >
           + Add Question
         </button>
 
@@ -77,6 +84,35 @@ export default function QuestionsPage() {
         </table>
 
       </div>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+
+          <div className="bg-white rounded-xl shadow-lg p-8 w-[500px]">
+
+            <h2 className="text-2xl font-bold text-green-700">
+              Add Question
+            </h2>
+
+            <p className="text-gray-500 mt-2">
+              This is our first modal.
+            </p>
+
+            <div className="flex justify-end mt-8">
+
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-6 py-3 border rounded-lg"
+              >
+                Cancel
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+      )}
 
     </>
   );
