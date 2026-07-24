@@ -4,7 +4,11 @@ import { useState } from "react";
 import mockAdminQuestions from "@/data/mockAdminQuestions";
 
 export default function QuestionsPage() {
+
   const [showModal, setShowModal] = useState(false);
+  const [category, setCategory] = useState("");
+  const [question, setQuestion] = useState("");
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -94,9 +98,36 @@ export default function QuestionsPage() {
               Add Question
             </h2>
 
-            <p className="text-gray-500 mt-2">
-              This is our first modal.
-            </p>
+            <div className="mt-6">
+
+              <label className="block font-semibold mb-2">
+                Category
+              </label>
+
+              <input
+                type="text"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                placeholder="Example: Analytical Skills"
+                className="w-full border rounded-lg p-3"
+              />
+
+            </div>
+
+            <div className="mt-6">
+
+              <label className="block font-semibold mb-2">
+                Question
+              </label>
+
+              <textarea
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                placeholder="Enter the question..."
+                className="w-full border rounded-lg p-3 h-32"
+              />
+
+            </div>
 
             <div className="flex justify-end mt-8">
 
