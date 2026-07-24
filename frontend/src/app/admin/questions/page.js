@@ -10,6 +10,8 @@ export default function QuestionsPage() {
   const [category, setCategory] = useState("");
   const [question, setQuestion] = useState("");
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [questionList, setQuestionList] = useState(mockAdminQuestions);
 
   // NEW
@@ -103,7 +105,17 @@ export default function QuestionsPage() {
 
       </div>
 
-      <div className="mt-8 bg-white rounded-xl shadow overflow-hidden">
+      <div className="mt-8 mb-4">
+
+        <input
+          type="text"
+          placeholder="Search by category or question..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full border rounded-lg p-3"
+        />
+
+      </div>
 
         <table className="w-full">
 
@@ -123,7 +135,18 @@ export default function QuestionsPage() {
 
           <tbody>
 
-            {questionList.map((item) => (
+            {questionList
+            .filter((item) => {
+
+              const search = searchTerm.toLowerCase();
+
+              return (
+                item.category.toLowerCase().includes(search) ||
+                item.question.toLowerCase().includes(search)
+              );
+
+            })
+            .map((item) => (
 
               <tr
                 key={item.id}
