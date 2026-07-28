@@ -113,6 +113,12 @@ export default function QuestionsPage() {
 
   function handleDeleteQuestion(id) {
 
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this question?"
+    );
+
+    if (!confirmed) return;
+
     const updatedQuestions = questionList.filter(
       (item) => item.id !== id
     );
