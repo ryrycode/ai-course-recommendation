@@ -39,6 +39,18 @@ export default function QuestionsPage() {
     setShowModal(false);
   }
 
+  function handleEditQuestion(item) {
+
+    setEditingId(item.id);
+
+    setCategory(item.category);
+
+    setQuestion(item.question);
+
+    setShowModal(true);
+
+  }
+
   function openAddModal() {
     setEditingId(null);
     setCategory("");
@@ -210,7 +222,7 @@ export default function QuestionsPage() {
                 <td className="p-4 text-center space-x-4">
 
                   <button
-                    onClick={() => openEditModal(item)}
+                    onClick={() => handleEditQuestion(item)}
                     className="text-blue-600 hover:underline"
                   >
                     Edit
