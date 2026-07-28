@@ -68,7 +68,7 @@ export default function QuestionsPage() {
   function handleSaveQuestion() {
 
     if (!category.trim() || !question.trim()) {
-      alert("Please complete all fields.");
+      alert("Please fill in all fields.");
       return;
     }
 
@@ -77,11 +77,13 @@ export default function QuestionsPage() {
       const updatedQuestions = questionList.map((item) => {
 
         if (item.id === editingId) {
+
           return {
             ...item,
             category,
             question,
           };
+
         }
 
         return item;
@@ -93,15 +95,12 @@ export default function QuestionsPage() {
     } else {
 
       const newQuestion = {
-        id: questionList.length + 1,
+        id: Date.now(),
         category,
         question,
       };
 
-      setQuestionList([
-        ...questionList,
-        newQuestion,
-      ]);
+      setQuestionList([...questionList, newQuestion]);
 
     }
 
@@ -109,6 +108,7 @@ export default function QuestionsPage() {
     setQuestion("");
     setEditingId(null);
     setShowModal(false);
+
   }
 
   function handleDeleteQuestion(id) {
@@ -252,11 +252,7 @@ export default function QuestionsPage() {
           <div className="bg-white rounded-xl shadow-lg w-[550px] p-8">
 
             <h2 className="text-2xl font-bold text-green-700">
-
-              {editingId !== null
-                ? "Edit Question"
-                : "Add Question"}
-
+              {editingId !== null ? "Edit Question" : "Add Question"}
             </h2>
 
             <div className="mt-6">
@@ -301,7 +297,7 @@ export default function QuestionsPage() {
                 onClick={handleSaveQuestion}
                 className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
               >
-                Save
+                {editingId !== null ? "Update" : "Save"}
               </button>
 
             </div>
