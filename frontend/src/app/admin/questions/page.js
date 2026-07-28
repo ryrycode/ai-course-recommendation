@@ -18,6 +18,27 @@ export default function QuestionsPage() {
 
   const [editingId, setEditingId] = useState(null);
 
+  function handleSaveQuestion() {
+
+    if (!category.trim() || !question.trim()) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    const newQuestion = {
+      id: Date.now(),
+      category: category,
+      question: question,
+    };
+
+    setQuestionList([...questionList, newQuestion]);
+
+    setCategory("");
+    setQuestion("");
+
+    setShowModal(false);
+  }
+
   function openAddModal() {
     setEditingId(null);
     setCategory("");
@@ -268,7 +289,7 @@ export default function QuestionsPage() {
                 onClick={handleSaveQuestion}
                 className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
               >
-                {editingId !== null ? "Update" : "Save"}
+                Save
               </button>
 
             </div>
