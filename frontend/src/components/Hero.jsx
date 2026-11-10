@@ -2,55 +2,43 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-r from-green-50 to-white min-h-[85vh] flex items-center">
+    <section className="bg-linear-to-r from-[#cdffd8] to-[#94b9ff] min-h-[85vh] flex items-center justify-center">
 
-      <div className="max-w-7xl mx-auto px-8 grid md:grid-cols-2 gap-16 items-center">
+      <div className="max-w-7xl mx-auto px-8 flex justify-center">
 
         {/* Left Side */}
-        <div>
+        <div className="text-center">
 
-          <h1 className="text-6xl font-extrabold text-green-700 leading-tight">
-            Find the
+          <h1 className="text-6xl tracking-wider text-black [font-family:'Gulfs_Display',sans-serif] [transform:scaleX(1.5)]">
+            Designed for
             <br />
-            Right Course
-            <br />
-            for Your Future
+            Smarter Decisions.
           </h1>
 
-          <p className="mt-8 text-lg text-gray-600 leading-8">
-            Our AI-powered course recommendation system helps upcoming
-            first-year university students discover the academic program
-            that best matches their interests, skills, and career goals.
+          <p className="mt-6 text-lg text-gray-600 leading-8">
+            Powered by Artificial Intelligence.
+            <br />
+            Driven by Your Potential.
           </p>
 
-          <Link href="/student">
-            <button className="mt-8 bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-lg text-lg font-semibold transition">
-              Start Assessment
-            </button>
-          </Link>
+          <div className="flex justify-center gap-6 mt-8">
 
-          <div className="mt-6">
-            <p className="text-gray-500">
-              Administrator?
-            </p>
-
-            <Link
-              href="/admin/login"
-              className="text-green-700 font-semibold hover:underline"
-            >
-              Login Here
+            <Link href="/student">
+              <button className="bg-[#1F2937] text-white px-20 py-4 rounded-full text-sm transition">
+                STUDENT
+              </button>
             </Link>
+
+            <Link href="/student">
+              <button className="bg-[#1F2937] text-white px-20 py-1.5 rounded-full text-sm transition">
+                GUIDANCE
+                <br />
+                COUNSELOR
+              </button>
+            </Link>
+
           </div>
 
-        </div>
-
-        {/* Right Side */}
-        <div className="flex justify-center">
-          <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=700"
-            alt="Students"
-            className="rounded-3xl shadow-2xl"
-          />
         </div>
 
       </div>

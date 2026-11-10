@@ -6,6 +6,7 @@ import Hero from "../components/Hero";
 import Features from "../components/Features";
 import HowItWorks from "../components/HowItWorks";
 import AssessmentCategories from "../components/AssessmentCategories";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (  
@@ -15,6 +16,7 @@ export default function Home() {
       <Features />
       <HowItWorks />
       <AssessmentCategories />
+      <Footer />
     </>
   );
 }

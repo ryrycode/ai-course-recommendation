@@ -1,6 +1,6 @@
 export default function Features() {
   return (
-    <section className="py-24 bg-white">
+    <section className="bg-linear-to-r from-[#cdffd8] to-[#94b9ff] min-h-[85vh] flex items-center">
 
       <div className="max-w-7xl mx-auto px-8">
 
