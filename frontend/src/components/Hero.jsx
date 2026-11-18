@@ -6,7 +6,6 @@ export default function Hero() {
 
       <div className="max-w-7xl mx-auto px-8 flex justify-center">
 
-        {/* Left Side */}
         <div className="text-center">
 
           <h1 className="text-6xl tracking-wider text-black [font-family:'Gulfs_Display',sans-serif] [transform:scaleX(1.5)]">
@@ -21,19 +20,11 @@ export default function Hero() {
             Driven by Your Potential.
           </p>
 
-          <div className="flex justify-center gap-6 mt-8">
+          <div className="flex justify-center mt-8">
 
             <Link href="/student">
-              <button className="bg-[#1F2937] text-white px-20 py-4 rounded-full text-sm transition">
-                STUDENT
-              </button>
-            </Link>
-
-            <Link href="/student">
-              <button className="bg-[#1F2937] text-white px-20 py-1.5 rounded-full text-sm transition">
-                GUIDANCE
-                <br />
-                COUNSELOR
+              <button className="bg-[#1F2937] font-extrabold text-white px-20 py-4 rounded-full text-sm transition hover:bg-[#111827]">
+                Get Started
               </button>
             </Link>
 

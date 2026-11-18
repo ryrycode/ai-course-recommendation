@@ -15,7 +15,7 @@ export default function AdminLogin() {
           </h1>
 
           <p className="text-gray-500 mt-2">
-            Administrator Login
+            Staff Portal
           </p>
 
         </div>

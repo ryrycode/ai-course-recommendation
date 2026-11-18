@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ResultsPage() {
   return (
-    <main className="min-h-screen bg-gray-100 py-16">
+    <main className="min-h-screen bg-linear-to-r from-[#cdffd8] to-[#94b9ff] py-16">
 
       <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg p-10">
 
@@ -51,7 +51,7 @@ export default function ResultsPage() {
 
             <div className="border rounded-xl p-6 shadow-sm">
 
-                <h3 className="font-bold text-xl">
+                <h3 className="font-bold text-black text-xl">
                     BS Computer Science
                 </h3>
 
@@ -63,7 +63,7 @@ export default function ResultsPage() {
 
             <div className="border rounded-xl p-6 shadow-sm">
 
-                <h3 className="font-bold text-xl">
+                <h3 className="font-bold text-black text-xl">
                     BS Information Systems
                 </h3>
 
@@ -100,7 +100,7 @@ export default function ResultsPage() {
                         📚 Course Offered:
                     </p>
 
-                    <p className="font-semibold">
+                    <p className="font-semibold text-black">
                         Bachelor of Science in Information Technology
                     </p>
 
@@ -120,7 +120,7 @@ export default function ResultsPage() {
                         📚 Course Offered:
                     </p>
 
-                    <p className="font-semibold">
+                    <p className="font-semibold text-black">
                         Bachelor of Science in Information Technology
                     </p>
 

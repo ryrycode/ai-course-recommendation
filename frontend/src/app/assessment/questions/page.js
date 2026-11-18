@@ -1,101 +1,129 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
-import QuestionCard from "@/components/QuestionCard";
-import questions from "@/data/mockAdminQuestions";
+import { useRouter } from "next/navigation";
+import mockAdminQuestions from "@/data/mockAdminQuestions";
+import ThinkerLogo from "@/components/ThinkerLogo";
 
-export default function AssessmentQuestions() {
-    const [currentSection, setCurrentSection] = useState(1);
+const answerChoices = [
+  "Strongly Agree",
+  "Agree",
+  "Neutral",
+  "Disagree",
+  "Strongly Disagree",
+];
 
-    const totalSections = 6;
+export default function AssessmentQuestionsPage() {
+  const router = useRouter();
 
-        function nextSection() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [answers, setAnswers] = useState({});
 
-            if (currentSection < totalSections) {
+  const question = mockAdminQuestions[currentQuestion];
+  const totalQuestions = mockAdminQuestions.length;
+  const currentAnswer = answers[question.id];
 
-                setCurrentSection(currentSection + 1);
+  const progress =
+    ((currentQuestion + 1) / totalQuestions) * 100;
 
-            }
+  function handleAnswer(answer) {
+    setAnswers((previous) => ({
+      ...previous,
+      [question.id]: answer,
+    }));
+  }
 
-        }
+  function handleNext() {
+    if (!currentAnswer) return;
 
-    const filteredQuestions = questions.filter(
-        (question) => question.section === currentSection
-    );
+    if (currentQuestion === totalQuestions - 1) {
+      console.log("Assessment answers:", answers);
+      router.push("/results");
+      return;
+    }
+
+    setCurrentQuestion((previous) => previous + 1);
+  }
+
   return (
-    <main className="min-h-screen bg-gray-100 py-16">
+    <main className="min-h-screen bg-linear-to-r from-[#cdffd8] to-[#94b9ff] flex items-center justify-center px-6 py-8">
+      <div className="w-full max-w-5xl">
 
-      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-10">
+        {/* Logo */}
+        <div className="mb-4">
+          <ThinkerLogo />
+        </div>
 
-        {/* Progress Bar */}
-        <div className="mb-10">
+        {/* Assessment Panel */}
+        <section className="relative bg-[#fffbed] rounded-2xl min-h-[500px] overflow-hidden shadow-sm flex flex-col">
 
-          <p className="font-semibold text-green-700">
-            Section {currentSection} of 6
-          </p>
+          {/* Content */}
+          <div className="flex-1 flex flex-col items-center px-10 pt-8 pb-20">
 
-          <div className="w-full bg-gray-200 rounded-full h-3 mt-3">
-            <div
-              className="bg-green-700 h-3 rounded-full"
-              style={{ width: "17%" }}
-            ></div>
+            {/* Category */}
+            <h1 className="text-4xl font-bold text-[#111827] text-center">
+              {question.category} Skills
+            </h1>
+
+            {/* Question Counter */}
+            <p className="mt-4 text-sm text-gray-500">
+              Question {currentQuestion + 1} of {totalQuestions}
+            </p>
+
+            {/* Question */}
+            <div className="flex items-center justify-center flex-1 w-full">
+              <p className="max-w-2xl text-center text-xl md:text-2xl font-semibold text-[#111827] leading-relaxed">
+                {question.question}
+              </p>
+            </div>
+
+            {/* Answer Choices */}
+            <div className="w-full max-w-md space-y-2">
+              {answerChoices.map((choice) => {
+                const selected = currentAnswer === choice;
+
+                return (
+                  <button
+                    key={choice}
+                    type="button"
+                    onClick={() => handleAnswer(choice)}
+                    className={`w-full h-9 rounded-full border text-sm font-semibold transition ${
+                      selected
+                        ? "bg-[#283d7a] text-white border-[#283d7a]"
+                        : "bg-transparent text-[#111827] border-gray-400 hover:bg-white"
+                    }`}
+                  >
+                    {choice}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-        </div>
-
-        <h1 className="text-4xl font-bold text-green-700">
-          Assessment Questionnaire
-        </h1>
-
-        <p className="text-gray-600 mt-3">
-          Please answer each statement honestly.
-        </p>
-
-        {/* Skill Category */}
-        <div className="mt-10 border-l-4 border-green-700 bg-green-50 p-5 rounded-lg">
-
-          <h2 className="text-2xl font-bold text-green-700">
-            {filteredQuestions[0]?.title}
-          </h2>
-
-          <p className="text-gray-600 mt-2">
-            This section evaluates your ability to analyze situations,
-            solve problems, and apply logical reasoning.
-          </p>
-
-        </div>
-
-        {filteredQuestions.map((item) => (
-            <QuestionCard
-                key={item.id}
-                number={item.id}
-                total={30}
-                name={`q${item.id}`}
-                question={item.question}
-            />
-        ))}
-
-        {/* Navigation */}
-        <div className="flex justify-between mt-10">
-
-          <button className="px-8 py-3 border rounded-lg hover:bg-gray-100">
-            Previous
+          {/* Next Button */}
+          <button
+            type="button"
+            onClick={handleNext}
+            disabled={!currentAnswer}
+            className={`absolute right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full flex items-center justify-center text-2xl transition ${
+              currentAnswer
+                ? "bg-[#283d7a] text-white hover:bg-[#1f315f]"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+            }`}
+          >
+            {currentQuestion === totalQuestions - 1 ? "✓" : "›"}
           </button>
 
-          <Link href="/results">
-            <button
-                onClick={nextSection}
-                className="px-8 py-3 bg-green-700 hover:bg-green-800 text-white rounded-lg"
-            >
-                Next
-            </button>
-          </Link>
+          {/* Progress Bar */}
+          <div className="absolute bottom-0 left-0 w-full h-3 bg-transparent">
+            <div
+              className="h-full bg-[#00a8e8] transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
 
-        </div>
-
+        </section>
       </div>
-
     </main>
   );
 }

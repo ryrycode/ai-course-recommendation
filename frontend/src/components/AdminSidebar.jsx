@@ -10,7 +10,7 @@ export default function AdminSidebar() {
       </h1>
 
       <p className="text-green-100 mt-2">
-        Administrator
+        Staff Portal
       </p>
 
       <nav className="mt-10 space-y-4">
@@ -44,13 +44,44 @@ export default function AdminSidebar() {
         </Link>
 
         <Link
+          href="/admin/users"
+          className="block hover:text-green-200"
+        >
+          👥 Staff Accounts
+        </Link>
+
+        <Link
           href="/admin/criteria"
           className="block hover:text-green-200"
         >
           ⚙ Recommendation Criteria
         </Link>
 
+        <Link
+          href="/admin/settings"
+          className="block hover:text-green-200"
+        >
+          ⚙️ Settings
+        </Link>
+
+        <Link
+          href="/admin/profile"
+          className="block hover:text-green-200"
+        >
+          👤 My Profile
+        </Link>
+
       </nav>
+
+        <button
+          type="button"
+          onClick={() => {
+            window.location.href = "/admin/login";
+          }}
+          className="block w-full text-left hover:text-green-200"
+        >
+          🚪 Logout
+        </button>
 
     </aside>
 

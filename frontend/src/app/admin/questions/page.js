@@ -1,309 +1,185 @@
 "use client";
 
 import { useState } from "react";
-import mockAdminQuestions from "@/data/mockAdminQuestions";
+import { useRouter } from "next/navigation";
+import QuestionCard from "@/components/QuestionCard";
+import questions from "@/data/mockAdminQuestions";
+import ThinkerLogo from "@/components/ThinkerLogo";
 
-export default function QuestionsPage() {
+export default function AssessmentQuestions() {
+  const router = useRouter();
+  const [currentSection, setCurrentSection] = useState(1);
 
-  const [showModal, setShowModal] = useState(false);
+  const totalSections = 3;
 
-  const [category, setCategory] = useState("");
-  const [question, setQuestion] = useState("");
+  const filteredQuestions = questions.filter(function (question) {
+    return question.section === currentSection;
+  });
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const currentTitle =
+    filteredQuestions.length > 0
+      ? filteredQuestions[0].title
+      : "Assessment";
 
-  const [selectedCategory, setSelectedCategory] = useState("All Categories");
-
-  const [questionList, setQuestionList] = useState(mockAdminQuestions);
-
-  const [editingId, setEditingId] = useState(null);
-
-  function handleSaveQuestion() {
-
-    if (!category.trim() || !question.trim()) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    const newQuestion = {
-      id: Date.now(),
-      category: category,
-      question: question,
-    };
-
-    setQuestionList([...questionList, newQuestion]);
-
-    setCategory("");
-    setQuestion("");
-
-    setShowModal(false);
-  }
-
-  function handleEditQuestion(item) {
-
-    setEditingId(item.id);
-
-    setCategory(item.category);
-
-    setQuestion(item.question);
-
-    setShowModal(true);
-
-  }
-
-  function openAddModal() {
-    setEditingId(null);
-    setCategory("");
-    setQuestion("");
-    setShowModal(true);
-  }
-
-  function openEditModal(item) {
-    setEditingId(item.id);
-    setCategory(item.category);
-    setQuestion(item.question);
-    setShowModal(true);
-  }
-
-  function handleSaveQuestion() {
-
-    if (!category.trim() || !question.trim()) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    if (editingId !== null) {
-
-      const updatedQuestions = questionList.map((item) => {
-
-        if (item.id === editingId) {
-
-          return {
-            ...item,
-            category,
-            question,
-          };
-
-        }
-
-        return item;
-
-      });
-
-      setQuestionList(updatedQuestions);
-
+  function handleNext() {
+    if (currentSection < totalSections) {
+      setCurrentSection(currentSection + 1);
     } else {
-
-      const newQuestion = {
-        id: Date.now(),
-        category,
-        question,
-      };
-
-      setQuestionList([...questionList, newQuestion]);
-
+      router.push("/results");
     }
-
-    setCategory("");
-    setQuestion("");
-    setEditingId(null);
-    setShowModal(false);
-
   }
 
-  function handleDeleteQuestion(id) {
-
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this question?"
-    );
-
-    if (!confirmed) return;
-
-    const updatedQuestions = questionList.filter(
-      (item) => item.id !== id
-    );
-
-    setQuestionList(updatedQuestions);
-
+  function handlePrevious() {
+    if (currentSection > 1) {
+      setCurrentSection(currentSection - 1);
+    } else {
+      router.push("/student");
+    }
   }
-
-  const categories = [
-  "All Categories",
-  ...new Set(questionList.map((item) => item.category)),
-  ];
 
   return (
-    <>
+    <main className="min-h-screen bg-gradient-to-r from-[#cdffd8] to-[#94b9ff] px-8 py-8">
 
-      <div className="flex justify-between items-center">
-
-        <h1 className="text-4xl font-bold text-green-700">
-          Question Management
-        </h1>
-
-        <button
-          onClick={openAddModal}
-          className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
-        >
-          + Add Question
-        </button>
-
+      <div className="mb-8">
+        <ThinkerLogo />
       </div>
 
-      <div className="mt-8 mb-4 flex gap-4">
+      <div className="mx-auto flex max-w-7xl gap-12">
 
-        <input
-          type="text"
-          placeholder="Search by category or question..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="flex-1 border rounded-lg p-3"
-        />
+        {/* LEFT STEPPER */}
+        <div className="w-64 shrink-0 pt-8">
 
-        <select
-          value={selectedCategory}
-          onChange={(e) => setSelectedCategory(e.target.value)}
-          className="border rounded-lg p-3 w-64"
-        >
+          <h2 className="mb-6 text-2xl font-bold text-[#111827]">
+            Step 2 of 2
+          </h2>
 
-          {categories.map((category) => (
+          {/* STEP 1 */}
+          <div className="relative flex items-center">
 
-            <option
-              key={category}
-              value={category}
-            >
-              {category}
-            </option>
+            <div className="z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#2F4385] text-lg font-bold text-white">
+              ✓
+            </div>
 
-          ))}
+            <p className="ml-5 text-sm font-semibold text-[#111827]">
+              Assessment Information
+            </p>
 
-        </select>
+            <div className="absolute left-[21px] top-11 h-16 w-0.5 bg-[#2F4385]"></div>
 
-      </div>
+          </div>
 
-        <table className="w-full">
+          {/* STEP 2 */}
+          <div className="mt-16 flex items-center">
 
-          <thead className="bg-green-700 text-white">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#2F4385] text-lg font-bold text-white">
+              2
+            </div>
 
-            <tr>
+            <p className="ml-5 text-sm font-semibold text-[#111827]">
+              Assessment
+            </p>
 
-              <th className="text-left p-4">Category</th>
+          </div>
 
-              <th className="text-left p-4">Question</th>
+        </div>
 
-              <th className="text-center p-4">Actions</th>
+        {/* RIGHT CARD */}
+        <div className="min-w-0 flex-1">
 
-            </tr>
+          <div className="rounded-2xl bg-[#fffdf2] px-7 py-8 shadow-sm md:px-8 md:py-9">
 
-          </thead>
+            <h1 className="text-3xl font-bold text-[#111827]">
+              Assessment Questionnaire
+            </h1>
 
-          <tbody>
+            <p className="mt-2 text-sm font-medium text-[#111827]">
+              Please answer each statement honestly based on your own
+              experiences, interests, and preferences.
+            </p>
 
-            {questionList
-            .filter((item) => {
+            {/* PROGRESS */}
+            <div className="mt-8">
 
-              const search = searchTerm.toLowerCase();
+              <div className="flex items-center justify-between">
 
-              return (
-                item.category.toLowerCase().includes(search) ||
-                item.question.toLowerCase().includes(search)
-              );
+                <p className="text-sm font-semibold text-[#2F4385]">
+                  Section {currentSection} of {totalSections}
+                </p>
 
-            })
-            .map((item) => (
+                <p className="text-xs font-medium text-gray-500">
+                  {currentSection === 1 && "33%"}
+                  {currentSection === 2 && "67%"}
+                  {currentSection === 3 && "100%"}
+                </p>
 
-              <tr
-                key={item.id}
-                className="border-b"
-              >
+              </div>
 
-                <td className="p-4">
-                  {item.category}
-                </td>
+              <div className="mt-2 h-2 w-full rounded-full bg-gray-200">
 
-                <td className="p-4">
-                  {item.question}
-                </td>
+                <div
+                  className={
+                    currentSection === 1
+                      ? "h-2 w-1/3 rounded-full bg-[#2F4385]"
+                      : currentSection === 2
+                      ? "h-2 w-2/3 rounded-full bg-[#2F4385]"
+                      : "h-2 w-full rounded-full bg-[#2F4385]"
+                  }
+                ></div>
 
-                <td className="p-4 text-center space-x-4">
-
-                  <button
-                    onClick={() => handleEditQuestion(item)}
-                    className="text-blue-600 hover:underline"
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    onClick={() => handleDeleteQuestion(item.id)}
-                    className="text-red-600 hover:underline"
-                  >
-                    Delete
-                  </button>
-
-                </td>
-
-              </tr>
-
-            ))}
-
-          </tbody>
-
-        </table>
-
-      {showModal && (
-
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-
-          <div className="bg-white rounded-xl shadow-lg w-[550px] p-8">
-
-            <h2 className="text-2xl font-bold text-green-700">
-              {editingId !== null ? "Edit Question" : "Add Question"}
-            </h2>
-
-            <div className="mt-6">
-
-              <label className="block font-semibold mb-2">
-                Category
-              </label>
-
-              <input
-                type="text"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                className="w-full border rounded-lg p-3"
-              />
+              </div>
 
             </div>
 
-            <div className="mt-6">
+            {/* SECTION HEADER */}
+            <div className="mt-8 border-l-4 border-[#2F4385] bg-[#eef2ff] p-5">
 
-              <label className="block font-semibold mb-2">
-                Question
-              </label>
+              <h2 className="text-xl font-bold text-[#2F4385]">
+                {currentTitle}
+              </h2>
 
-              <textarea
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                className="w-full border rounded-lg p-3 h-32"
-              />
+              <p className="mt-2 text-sm leading-6 text-gray-600">
+                This section contains questions related to your abilities,
+                interests, and preferences.
+              </p>
 
             </div>
 
-            <div className="flex justify-end gap-4 mt-8">
+            {/* QUESTIONS */}
+            <div className="mt-6">
+
+              {filteredQuestions.map(function (item) {
+                return (
+                  <QuestionCard
+                    key={item.id}
+                    number={item.id}
+                    total={questions.length}
+                    name={"q" + item.id}
+                    question={item.question}
+                  />
+                );
+              })}
+
+            </div>
+
+            {/* BUTTONS */}
+            <div className="mt-8 flex items-center justify-between">
 
               <button
-                onClick={() => setShowModal(false)}
-                className="border px-6 py-3 rounded-lg hover:bg-gray-100"
+                type="button"
+                onClick={handlePrevious}
+                className="rounded-full border border-gray-400 px-8 py-2.5 text-sm font-bold text-gray-700 hover:bg-gray-100"
               >
-                Cancel
+                BACK
               </button>
 
               <button
-                onClick={handleSaveQuestion}
-                className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-lg"
+                type="button"
+                onClick={handleNext}
+                className="rounded-full bg-[#50505A] px-8 py-2.5 text-sm font-bold text-white hover:bg-[#3f3f47]"
               >
-                {editingId !== null ? "Update" : "Save"}
+                {currentSection === totalSections
+                  ? "SUBMIT ASSESSMENT"
+                  : "NEXT"}
               </button>
 
             </div>
@@ -312,8 +188,8 @@ export default function QuestionsPage() {
 
         </div>
 
-      )}
+      </div>
 
-    </>
+    </main>
   );
 }
